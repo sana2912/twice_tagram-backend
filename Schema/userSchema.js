@@ -5,7 +5,7 @@ const playlist_schema = new Schema({
     playist_name: String,
     user_ref: String,
     track_ref: [String]
-}, { collection: 'user_playlist' });
+}, { collection: 'tagram_user_playlist' });
 
 const user_schema = new Schema({
     email: {
@@ -20,22 +20,17 @@ const user_schema = new Schema({
     username: {
         type: String,
         required: true,
-        unique: true,
     },
     ig_: String,
     faceBook_: String,
     profile: String,
     playlist: [String],
     like: [String]
-}, { collection: "user_profile" });
+}, { collection: "tagram_user_profile" });
 
 const playlist_ = mongoose.model('playlist_', playlist_schema);
 const user = mongoose.model('user', user_schema);
 module.exports = {
     playlist_: playlist_,
     user: user
-}
-const data = {
-    item0: { id: 'creating', val: 'on', name: 'fancy' },
-    item1: { id: 'creating', val: 'on', name: 'what is love' }
 }

@@ -6,6 +6,11 @@ const bcrypt = require('bcryptjs');
 module.exports.register_admin_data = async function (req, res, next) {
     try {
         const ob = req.body;
+        const admin_email = await admin_data.findOne({ email: ob.email });
+        if (admin_email) {
+            res.status(401).json({ message: "บัญชีนี้ถูกใช้แล้ว" });
+            return;
+        }
         const admin_ = await create_new_admin(ob);
         const token = jwt.sign({ admin_id: admin_.id, position: admin_.position }, SECRET);
         res.cookie('admin_token', token, {
@@ -14,7 +19,7 @@ module.exports.register_admin_data = async function (req, res, next) {
             sameSite: 'None',
             maxAge: 60 * 60 * 1000,
             path: '/',
-        }).status(200).json({ message: "complete" });
+        }).status(200).json({ message: "complete", username: admin_.username });
     }
     catch (err) {
         console.log(err);
@@ -24,7 +29,7 @@ module.exports.register_admin_data = async function (req, res, next) {
 module.exports.login_admin_function = async function (req, res, next) {
     const { username, password, position } = req.body;
     try {
-        const get_admin = await admin_data.findOne({ username });
+        const get_admin = await admin_data.findOne({ username: username });
         if (!get_admin) {
             res.status(401).json({ message: "เราไม่พบบัญชีของคุณกรุณาลงทะเบียน" });
         } else {
@@ -37,7 +42,7 @@ module.exports.login_admin_function = async function (req, res, next) {
                     sameSite: 'None',
                     maxAge: 60 * 60 * 1000,
                     path: '/',
-                }).status(200).json({ message: 'complete' });
+                }).status(200).json({ message: 'complete', username: get_admin.username });
             }
             else {
                 res.status(401).json({ message: 'รหัสผ่านของคุณไม่ถูกต้อง' });

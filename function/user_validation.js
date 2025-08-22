@@ -9,6 +9,11 @@ const secret = 'twice_Tagram_user_secret';
 module.exports.user_profile_config = async function (req, res, next) {
     try {
         const ob = req.body;
+        const user_email = await user.findOne({ email: ob.email });
+        if (user_email) {
+            res.status(401).json({ message: "บัญชีนี้ถูกใช้แล้ว" });
+            return;
+        }
         const user_img = req.file;
         const original_name = user_img.originalname.substring(0, user_img.originalname.length - 4);
         const profile_url = await upload_to_cloud(original_name, user_img);
@@ -21,7 +26,7 @@ module.exports.user_profile_config = async function (req, res, next) {
             sameSite: 'None',
             maxAge: 60 * 60 * 1000,
             path: '/',
-        }).status(200).json({ message: "complete", user_profile: getuser.profile });
+        }).status(200).json({ message: "complete", user_profile: profile_url });
     }
     catch (err) {
         console.error(err);
