@@ -1,0 +1,10 @@
+.env
+# Ignore all uploaded files
+twiceTagram/audio/*
+twiceTagram/image/*
+twiceTagram/user_img/*
+
+# But keep these placeholder files for Git tracks folders
+!twiceTagram/audio/.gitkeep
+!twiceTagram/image/.gitkeep
+!twiceTagram/user_img/.gitkeep
