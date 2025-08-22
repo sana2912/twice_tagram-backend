@@ -5,7 +5,7 @@ const playlist_schema = new Schema({
     playist_name: String,
     user_ref: String,
     track_ref: [String]
-}, { collection: 'tagram_user_playlist' });
+}, { collection: 'user_playlist' });
 
 const user_schema = new Schema({
     email: {
@@ -26,7 +26,7 @@ const user_schema = new Schema({
     profile: String,
     playlist: [String],
     like: [String]
-}, { collection: "tagram_user_profile" });
+}, { collection: "user_profile" });
 
 const playlist_ = mongoose.model('playlist_', playlist_schema);
 const user = mongoose.model('user', user_schema);

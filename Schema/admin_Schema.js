@@ -19,7 +19,7 @@ const admind_Schema = new Schema({
     last_name: String,
     position: String,
     track_created: [String]
-}, { collection: 'tagram_adming_data' });
+}, { collection: 'admin_data' });
 
 const admin_data = mongoose.model('admin_data', admind_Schema);
 module.exports = admin_data;
