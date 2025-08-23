@@ -81,10 +81,10 @@ app.get('/', (req, res) => {
       </style>
     </head>
     <body>
-      <h1>🎶 Streaming Backend Service</h1>
+      <h1>twice tagram backend service</h1>
       <p>Your backend is running smoothly 🚀</p>
       <a href="${process.env.FRONTEND_ORIGIN}" class="button" target="_blank">
-        Go to Frontend
+        go to twice-tagram UI
       </a>
     </body>
     </html>
