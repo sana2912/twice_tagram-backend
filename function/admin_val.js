@@ -57,7 +57,10 @@ module.exports.login_admin_function = async function (req, res, next) {
 module.exports.logout_admin_function = async function (req, res, next) {
     try {
         res.clearCookie('admin_token', {
-            path: '/'
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            path: '/',
         }).status(200).json({ message: 'log out complete' });
     }
     catch (err) {

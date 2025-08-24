@@ -65,7 +65,10 @@ module.exports.login_function = async function (req, res, next) {
 module.exports.logout_function = async function (req, res, next) {
     try {
         res.clearCookie('token', {
-            path: '/'
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            path: '/',
         }).status(200).json({ message: 'log out complete' });
     }
     catch (err) {
