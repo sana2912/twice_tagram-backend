@@ -1,7 +1,4 @@
 require('dotenv').config();
-const appErr = require('./Err_app');
-const jwtD = require('jwt-decode');
-const { jwtDecode } = jwtD;
 const jwt = require('jsonwebtoken');
 
 function twice_permission(req, res, next) {
