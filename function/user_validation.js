@@ -4,8 +4,8 @@ const { user } = require("../Schema/userSchema");
 const { cloudinary } = require("../cloud");
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-
-const secret = 'twice_Tagram_user_secret';
+require('dotenv').config();
+const secret = process.env.USER_SECRET;
 module.exports.user_profile_config = async function (req, res, next) {
     try {
         const ob = req.body;

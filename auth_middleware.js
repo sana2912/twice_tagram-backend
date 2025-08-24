@@ -1,50 +1,60 @@
-require('dotenv').config;
+require('dotenv').config();
 const appErr = require('./Err_app');
 const jwtD = require('jwt-decode');
 const { jwtDecode } = jwtD;
-async function twice_permission(req, res, next) {
+const jwt = require('jsonwebtoken');
+
+function twice_permission(req, res, next) {
     const token = req.cookies.token;
-    try {
-        if (token) {
-            const user_token = jwtDecode(token);
-            req.user = user_token.user_id;
-            next();
-        } else {
-            return res.status(401).json({
-                message: 'notACC',
-                location: `${process.env.FRONTEND_ORIGIN}/validation/login.html`
-            });
-        }
+    if (!token) {
+        return res.status(401).json({
+            message: 'not accout yet',
+            location: `${process.env.FRONTEND_ORIGIN}/validation/login.html`
+        });
     }
-    catch (err) { console.error(err); }
+    try {
+        const user_token = jwt.verify(token, process.env.USER_SECRET); // ✅ verify signature + exp
+        req.user = user_token.user_id;
+        next();
+    } catch (err) {
+        console.error(err);
+        return res.status(401).json({
+            message: 'invalid or expired token',
+            location: `${process.env.FRONTEND_ORIGIN}/validation/login.html`
+        });
+    }
+
 }
 function interact_permession(req, res, next) {
     const token = req.cookies.token;
+    if (!token) return next(); // guest mode
     try {
-        if (token) {
-            const user_token = jwtDecode(token);
-            req.user = user_token.user_id;
-            next();
-        } else {
-            next();
-        }
+        const user_token = jwt.verify(token, process.env.USER_SECRET); // ✅ verify
+        req.user = user_token.user_id;
+    } catch (err) {
+        console.error(err);
+        // guest mode → ไม่ต้องทำอะไร
     }
-    catch (err) { console.error(err); }
+    next();
 }
 function admin_permission(req, res, next) {
     const token = req.cookies.admin_token;
-    try {
-        if (token) {
-            const user_token = jwtDecode(token);
-            req.admin = user_token.admin_id;
-            next();
-        } else {
-            return res.status(401).json({
-                message: 'notACC',
-                location: `${process.env.FRONTEND_ORIGIN}/admin/management/authenticate.html`,
-            });
-        }
+    if (!token) {
+        return res.status(401).json({
+            message: 'not accout yet',
+            location: `${process.env.FRONTEND_ORIGIN}/admin/management/authenticate.html`,
+        });
     }
-    catch (err) { console.error(err); }
+    try {
+        const admin_token = jwt.verify(token, process.env.ADMIN_SECRET);
+        req.admin = admin_token.admin_id;
+        next();
+    } catch (err) {
+        console.error(err);
+        return res.status(401).json({
+            message: 'invalid or expired admin token',
+            location: `${process.env.FRONTEND_ORIGIN}/admin/management/authenticate.html`
+        });
+    }
 }
 module.exports = { twice_permission, interact_permession, admin_permission };

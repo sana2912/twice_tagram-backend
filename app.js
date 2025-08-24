@@ -13,13 +13,13 @@ const { twice_permission, interact_permession, admin_permission } = require('./a
 const cookieparser = require('cookie-parser');
 const port = 3000;
 const cors = require('cors');
-require('dotenv').config;
+require('dotenv').config();
 // set the domain that this server will accept diffrent request from other domen
 // learn more at : https://article.arunangshudas.com/how-would-you-manage-cors-in-a-production-express-js-application-45a1138dd6df
 
 app.use(cors({
-    origin: process.env.FRONTEND_ORIGIN,
-    credentials: true
+  origin: process.env.FRONTEND_ORIGIN,
+  credentials: true
 }));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
@@ -27,15 +27,15 @@ app.use(cookieparser());
 
 
 mongoose.connect(process.env.MONGODB_URl)
-    .then(() => console.log('connecting success'))
-    .catch((err_message) => {
-        console.log('connecting fail');
-        console.log(err_message);
-    })
+  .then(() => console.log('connecting success'))
+  .catch((err_message) => {
+    console.log('connecting fail');
+    console.log(err_message);
+  })
 
 // search field 
 app.get('/', (req, res) => {
-    res.send(`
+  res.send(`
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -115,8 +115,8 @@ app.post('/twiceTagram/profile/like/:track_id', twice_permission, user_ma_functi
 app.delete('/twiceTagram/profile/like/:track_id', twice_permission, remove_func.like_removing);
 // user validation section
 app.post('/twiceTagram/user/validation/profile_config',
-    uploads.single('img_profile'),
-    user_val_function.user_profile_config
+  uploads.single('img_profile'),
+  user_val_function.user_profile_config
 );
 app.post('/twiceTagram/user/validation/login', user_val_function.login_function);
 app.post('/twiceTagram/user/validation/logout', user_val_function.logout_function)
@@ -132,26 +132,26 @@ app.post('/twiceTagram/dashboard/logout', admind_regis.logout_admin_function);
 app.get('/twiceTagram/dashboard/admindDashboard', admin_permission, admin_post_function.getTrack_for_dasboard);
 app.get('/twiceTagram/dashboard/title/update/:id', admin_permission, admin_post_function.serve_formData);
 app.post('/twiceTagram/dashboard/title/create_form', admin_permission,
-    uploads.fields([
-        { name: 'audio', maxCount: 1 },
-        { name: 'img', maxCount: 1 }
-    ]),
-    admin_post_function.title_post
+  uploads.fields([
+    { name: 'audio', maxCount: 1 },
+    { name: 'img', maxCount: 1 }
+  ]),
+  admin_post_function.title_post
 );
 app.put('/twiceTagram/dashboard/title/update/:id', admin_permission,
-    uploads.fields([
-        { name: 'audio', maxCount: 1 },
-        { name: 'img', maxCount: 1 }
-    ]),
-    admin_post_function.update_track
+  uploads.fields([
+    { name: 'audio', maxCount: 1 },
+    { name: 'img', maxCount: 1 }
+  ]),
+  admin_post_function.update_track
 )
 app.delete('/twiceTagram/dashboard/title/remove/:id', admin_permission, admin_post_function.remove_data);
 
 app.use((err, req, res, next) => {
-    const { status, message } = err;
-    res.status(status || 500).json({ success: false, message: message || 'error from sever' });
+  const { status, message } = err;
+  res.status(status || 500).json({ success: false, message: message || 'error from sever' });
 });
 app.listen(port, () => {
-    console.log('this is my express app');
+  console.log('this is my express app');
 });
 

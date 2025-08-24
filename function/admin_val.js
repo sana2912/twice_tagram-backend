@@ -1,7 +1,8 @@
+require('dotenv').config();
 const appError = require("../Err_app");
 const admin_data = require("../Schema/admin_Schema");
 const jwt = require('jsonwebtoken');
-const SECRET = 'twice_tagram_secret_admin';
+const SECRET = process.env.ADMIN_SECRET
 const bcrypt = require('bcryptjs');
 module.exports.register_admin_data = async function (req, res, next) {
     try {
