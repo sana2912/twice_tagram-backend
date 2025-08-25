@@ -5,7 +5,7 @@ This is the backend service for the Twice Tagram app, providing API endpoints an
 
 ## 🔗 Project Position in Full System
 
-- **Frontend (fronend react app perform on netlify):** [twicetagram-ui](https://github.com/sana2912/twicetagram-ui.git))  
+- **Frontend (fronend react app perform on netlify):** [twicetagram-ui](https://github.com/sana2912/twicetagram-ui.git)
 - **Backend (perform on render):**  **this project**
 - **for more understanding see full systems picture:** [image](https://res.cloudinary.com/ddlspu2uq/image/upload/v1756124393/system2_o95cvf.jpg)  
 
