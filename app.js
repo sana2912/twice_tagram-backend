@@ -90,11 +90,14 @@ app.get('/', (req, res) => {
   <p>Your backend is running smoothly 🚀</p>
   
   <div class="button-container">
-    <a href="${process.env.FRONTEND_ORIGIN}" class="button" target="_blank">
+    <a href=`${process.env.FRONTEND_ORIGIN}` class="button" target="_blank">
       go to twice-tagram UI
     </a>
-    <a href="${process.env.FRONTEND_ORIGIN}/admin/home/home.html" class="button" target="_blank">
+    <a href=`${process.env.FRONTEND_ORIGIN}/admin/home/home.html` class="button" target="_blank">
       go to admin UI
+    </a>
+     <a href="https://github.com/sana2912/twicetagram-ui.git" class="button" target="_blank">
+      go to frontend repo
     </a>
   </div>
 
